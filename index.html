@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>¡¡FELIZ ANIVERSARIO!!</title>
+  <link rel="stylesheet" href="./style.css">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://www.youtube.com/iframe_api"></script>
+</head>
+<body>
+  <h1 style="text-align: center; color: #f34336;">¡¡FELIZ ANIVERSARIO!!</h1>
+  <div class="envlope-wrapper">
+    <div id="envelope" class="close">
+      <div class="front flap"></div>
+      <div class="front pocket"></div>
+      <div class="letter">
+        <div class="words line1">Arisbeth</div>
+        <div class="words line2">Quiero que sepas que te amo
+          Más que nada en este mundo
+        </div>
+        <div class="words line3">y me haces muy feliz</div>
+        <div class="words line4"></div>
+      </div>
+      <div class="hearts">
+        <div class="heart a1"></div>
+        <div class="heart a2"></div>
+        <div class="heart a3"></div>
+      </div>
+    </div>
+  </div>
+  <div class="reset">
+    <button id="open">Open</button>
+    <button id="reset">Reset</button>
+  </div>
+
+  <div class="reset">
+    <button id="playBtn" class="open">Iniciar</button>
+    <button id="pauseBtn" class="reset">Pausar</button>
+  </div>
+
+  <!-- Div oculto para YouTube -->
+  <div id="player" style="display: none;"></div>
+
+  <script>
+    $(document).ready(function () {
+      // --- Funcionalidad del sobre ---
+      const envelope = $('#envelope');
+      const btnOpen = $('#open');
+      const btnReset = $('#reset');
+
+      envelope.click(() => openEnvelope());
+      btnOpen.click(() => openEnvelope());
+      btnReset.click(() => closeEnvelope());
+
+      function openEnvelope() {
+        envelope.addClass('open').removeClass('close');
+      }
+
+      function closeEnvelope() {
+        envelope.addClass('close').removeClass('open');
+      }
+
+      // --- Funcionalidad de YouTube ---
+      let player;
+
+      // Inicializar la API de YouTube
+      window.onYouTubeIframeAPIReady = function () {
+        player = new YT.Player('player', {
+          videoId: 'xFfkITnyzp0', // ID del video
+          playerVars: {
+            autoplay: 0, // No comienza automáticamente
+            controls: 0, // Sin controles
+            showinfo: 0, // Sin información
+            modestbranding: 1, // Sin branding
+          },
+          events: {
+            onReady: onPlayerReady
+          }
+        });
+      };
+
+      function onPlayerReady(event) {
+        const playBtn = document.getElementById('playBtn');
+        const pauseBtn = document.getElementById('pauseBtn');
+
+        // Reproducir el audio
+        playBtn.addEventListener('click', () => {
+          player.playVideo();
+        });
+
+        // Pausar el audio
+        pauseBtn.addEventListener('click', () => {
+          player.pauseVideo();
+        });
+      }
+    });
+  </script>
+</body>
+</html>
